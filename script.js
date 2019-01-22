@@ -60,3 +60,7 @@ function gameOver(gameWon) {
 	}
 }
 
+/*
+	TODO:
+	Create player two instead of an ai
+*/

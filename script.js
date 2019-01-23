@@ -46,7 +46,11 @@ function turn(squareId, player) {
 	console.log(player);
 	document.getElementById(squareId).innerText = player;
 	let gameWon = checkWin(origBoard, player);
-	if(gameWon) gameOver(gameWon)
+	if(gameWon) {
+		gameOver(gameWon)
+	} else {
+		checkTie();
+	} 
 }
 
 function showWhichPlayerMoves(player) {

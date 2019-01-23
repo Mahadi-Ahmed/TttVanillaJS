@@ -1,6 +1,7 @@
 var origBoard;
-const huPlayer = '0';
-const aiPlayer = 'X';
+const playerOne = 'X';
+const playerTwo = '0';
+var playerOneTurn = true;
 const winCombos = [
 	[0, 1, 2],
 	[3, 4, 5],
@@ -26,12 +27,20 @@ function startGame () {
 }
 
 function turnClick(square) {
-	turn(square.target.id, huPlayer);
-	//console.log(square.target.id);
+	if (typeof origBoard[square.target.id] == 'number') {
+		if (!checkTie() && playerOneTurn) {
+			turn(square.target.id, playerOne);
+			playerOneTurn = false;
+		} else {
+			turn(square.target.id, playerTwo);
+			playerOneTurn = true;
+		}		
+	}
 }
 
 function turn(squareId, player) {
 	origBoard[squareId] = player;
+	console.log(player);
 	document.getElementById(squareId).innerText = player;
 	let gameWon = checkWin(origBoard, player);
 	if(gameWon) gameOver(gameWon)
@@ -53,14 +62,31 @@ function checkWin(board, player) {
 function gameOver(gameWon) {
 	for (let index of winCombos[gameWon.index]) {
 		document.getElementById(index).style.backgroundColor =
-			gameWon.player == huPlayer ? "blue" : "red";
+			gameWon.player == playerOne ? "blue" : "red";
 	}
 	for (var i = 0; i < cells.length; i++) {
 		cells[i].removeEventListener('click', turnClick, false);
 	}
+	declareWinner(gameWon.player == playerOne ? "Player One Wins!" : "Player Two Wins!");
 }
 
-/*
-	TODO:
-	Create player two instead of an ai
-*/
+function declareWinner(who) {
+	document.querySelector(".endgame").style.display = "block";
+	document.querySelector(".endgame .text").innerText = who;
+}
+
+function emptySquares() {
+	return origBoard.filter(s => typeof s == 'number');
+}
+
+function checkTie() {
+	if (emptySquares().length === 0) {
+		for (var i = 0; i < cells.length; i++) {
+			cells[i].style.backgroundColor = "green";
+			cells[i].removeEventListener('click', turnClick, false);
+		}
+		declareWinner("Tie Game!");
+		return true;
+	}
+	return false;
+}

@@ -9,12 +9,16 @@ td {
 	cursor: pointer;
 }
 
+.title {
+	text-align: center;
+}
+
 table {
 	border-collapse: collapse;
 	position: absolute;
 	left: 50%;
 	margin-left: -155px;
-	top: 50px;
+	top: 200px;
 }
 
 table tr:first-child td {

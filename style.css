@@ -53,3 +53,17 @@ table tr td:last-child {
   font-size: 2em;
 }
 
+.whosTurn {
+	position: relative;
+	width: 400px;
+	height: 200px;
+	position: relative;
+	text-align: center;
+	color: black;
+	font-size: 2em;
+	left: 50%;
+	margin-left: -155px;
+	top: 700px;
+
+}
+

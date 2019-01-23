@@ -18,6 +18,7 @@ startGame();
 
 function startGame () {
 	document.querySelector(".endgame").style.display = "none";
+	document.querySelector(".whosTurn .playerText").innerText = "";
 	origBoard = Array.from(Array(9).keys());
 	for (var i = 0; i < cells.length; i++) {
 		cells[i].innerText = '';
@@ -30,9 +31,11 @@ function turnClick(square) {
 	if (typeof origBoard[square.target.id] == 'number') {
 		if (!checkTie() && playerOneTurn) {
 			turn(square.target.id, playerOne);
+			showWhichPlayerMoves(playerTwo);
 			playerOneTurn = false;
 		} else {
 			turn(square.target.id, playerTwo);
+			showWhichPlayerMoves(playerOne);
 			playerOneTurn = true;
 		}		
 	}
@@ -44,6 +47,10 @@ function turn(squareId, player) {
 	document.getElementById(squareId).innerText = player;
 	let gameWon = checkWin(origBoard, player);
 	if(gameWon) gameOver(gameWon)
+}
+
+function showWhichPlayerMoves(player) {
+	document.querySelector(".whosTurn .playerText").innerText = player + " make a move!";
 }
 
 function checkWin(board, player) {
